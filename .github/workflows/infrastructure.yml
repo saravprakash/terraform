@@ -1,0 +1,25 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    name: 'Terraform'
+
+    # defaults:
+    #   run:
+    #     shell: bash
+    #     working directory: terraform
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: 'echo workspace'
+        run: |
+          echo ${{ github.workspace }}
+          echo $GITHUB_WORKSPACE
+      

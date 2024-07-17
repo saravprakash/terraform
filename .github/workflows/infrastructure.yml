@@ -74,5 +74,5 @@ jobs:
     
     steps:
         
-      - name: 'Terraform apply -auto-approve'
-        run: terraform apply   
+      - name: 'Terraform apply '
+        run: terraform apply -auto-approve 

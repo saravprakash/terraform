@@ -77,7 +77,16 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v3
-        
+
+      - name: 'echo workspace'
+        run: |
+          echo "github.workspace"
+          echo ${{ github.workspace }}
+          echo "GITHUB_WORKSPACE"
+          echo $GITHUB_WORKSPACE
+          echo "my working directory"
+          echo $MY_WORK_DIR
+          ls -al
       - name: 'Terraform apply'
         run: terraform apply -auto-approve
 

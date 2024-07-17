@@ -51,3 +51,5 @@ jobs:
       - name: 'Initialize terraform'
         run: terraform init
         
+      - name: 'Terraform plan'
+        run: terraform plan

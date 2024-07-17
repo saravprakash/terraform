@@ -1,8 +1,8 @@
 provider "azurerm" {
     features {
-      resource_provider_registrations = "none"
     }
-  
+
+    skip_provider_registration = true
 }
 
 resource "azurerm_resource_group" "rg-01" {

@@ -63,7 +63,8 @@ jobs:
 
   terraform_apply:
     environment: DEV
-    name: 'Terraform plan'
+    name: 'Terraform apply'
+    needs: [terraform_plan]
     
     env: 
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}

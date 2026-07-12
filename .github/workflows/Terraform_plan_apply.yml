@@ -46,13 +46,16 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: terraform
+        working-directory: infrastructure/${github.inputs.Configuration}
     
     steps:
       - name: checkout
         uses: actions/checkout@v3
+
       - name: 'echo workspace'
         run: |
+          pwd
+          
           echo "github.workspace"
           echo ${{ github.workspace }}
           echo "GITHUB_WORKSPACE"

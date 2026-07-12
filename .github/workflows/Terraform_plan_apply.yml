@@ -88,7 +88,8 @@ jobs:
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
       - name: 'Terraform plan'
-        run: terraform plan
+        run: terraform plan -backend-config=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfbackend -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
+        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
 
 
   terraform_apply:

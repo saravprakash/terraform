@@ -109,7 +109,20 @@ jobs:
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
       - name: 'Terraform plan'
-        run: terraform plan -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
+        run: |
+          if [ -n "${{ github.event.inputs.lock_id }}" ]; then
+            terraform force-unlock -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars ${{ github.event.inputs.lock_id }}
+          fi
+
+          if [ -n "${{ github.event.inputs.import_id }}" ] && [ -n "${{ github.event.inputs.import_name }}" ]; then
+            terraform import -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars ${{ github.event.inputs.import_name }} ${{ github.event.inputs.import_id }}
+          fi
+          
+          if [ -n "${{ github.event.inputs.remove_resource_name }}" ]; then
+            terraform state rm -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars ${{ github.event.inputs.remove_resource_name }}
+          fi
+
+          terraform plan -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
 
 
 

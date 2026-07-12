@@ -1,0 +1,108 @@
+name: 'Terraform Remove multiple resources from state file'
+
+on:
+  workflow_dispatch:
+    inputs:
+      Configuration:
+        type: choice
+        description: 'Select Configuration'
+        options:
+          - 'Network'
+          - 'AKS'
+          - 'functionapp'
+          - 'logicapp'
+      Environment:
+        type: choice
+        description: 'Select Environment'
+        options:
+          - 'DEV'
+          - 'UAT'
+          - 'PROD'
+      TerraformEnvironment:
+        type: choice
+        description: 'Select Terraform Environment'
+        options:
+          - 'DEV'
+          - 'UAT'
+          - 'PROD'
+      Resource_file:
+        type: string
+        description: 'Enter the path to the file containing resource names to be removed from state file'
+        default: "../../.github/workflows/resources_to_remove.txt"
+        required: true
+
+
+  # push:
+  #   branches:
+  #     - main
+  
+
+jobs:
+  terraform_remove_from_statefile:
+    environment: ${{github.event.inputs.Environment}}
+    name: 'Terraform plan'
+    env: 
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      TerraformEnvironment: ${{github.event.inputs.TerraformEnvironment}}
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+
+      - name: 'echo workspace'
+        run: |
+          pwd
+          echo "github.workspace"
+          echo ${{ github.workspace }}
+          echo "GITHUB_WORKSPACE"
+          echo $GITHUB_WORKSPACE
+          echo "my working directory"
+          echo $MY_WORK_DIR
+          ls -al
+        
+      - name: 'Install terraform'
+        run: |
+          sudo apt-get update && sudo apt-get install -y gnupg software-properties-common
+          wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+          gpg --no-default-keyring --keyring /usr/share/keyrings/hashicorp-archive-keyring.gpg --fingerprint
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          sudo apt update
+          sudo apt-get install terraform
+    
+      - name: 'Verify the installation'
+        run: |
+          terraform -help
+          terraform -help plan
+
+      # - name: 'Install and validate TFLINT'
+      #   run: |
+      #     curl -s https://raw.githubusercontent.com/terraform-linters/tflint/master/install_linux.sh | bash
+      #     tflint --help
+    
+
+      - name: 'Initialize terraform'
+        run: terraform init -backend-config=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfbackend -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
+        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
+        
+      - name: 'Terraform remove multiple resources from statefile and terraform plan'
+        run: |
+          if [ -f "${{ github.event.inputs.Resource_file }}" ]; then
+            while IFS= read -r resource; do
+              echo "Removing resource: $resource"
+              terraform state rm "$resource"
+            done < "${{ github.event.inputs.Resource_file }}"
+          else
+            echo "Resource file not found: ${{ github.event.inputs.Resource_file }}"
+            exit 1
+          fi
+          terraform plan -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
+

@@ -1,3 +1,3 @@
 locals{
-    resource_group_name =  lower("${ var.environment }-si-app-01")
+    resource_group_name =  lower("${ var.env }-si-app-01")
 }

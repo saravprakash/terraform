@@ -1,1 +1,1 @@
-environment = "DEV"
+env = "DEV"

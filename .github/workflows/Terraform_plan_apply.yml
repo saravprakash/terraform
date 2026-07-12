@@ -88,8 +88,8 @@ jobs:
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
       - name: 'Terraform plan'
-        run: terraform plan -backend-config=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfbackend -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
-        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
+        run: terraform plan -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
+
 
 
   terraform_apply:
@@ -148,8 +148,8 @@ jobs:
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
       - name: 'Terraform apply'
-        run: terraform apply -auto-approve 
-        #-backend-config=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfbackend -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{github.event.inputs.TerraformEnvironment}}.tfvars
+        run: terraform apply -auto-approve -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{github.event.inputs.TerraformEnvironment}}.tfvars
+        #-backend-config=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfbackend 
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
       - name: 'terraform state'
         run: terraform state list 

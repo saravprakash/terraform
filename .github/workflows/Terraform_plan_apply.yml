@@ -2,7 +2,7 @@ name: 'Terraform Plan and Apply'
 
 on:
   workflow_dispatch:
-    Inputs:
+    inputs:
       Configuration:
         type: choice
         description: 'Select Configuration'

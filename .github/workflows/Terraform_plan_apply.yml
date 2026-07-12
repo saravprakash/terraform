@@ -33,14 +33,14 @@ on:
 
 jobs:
   terraform_plan:
-    environment: ${github.inputs.Environment}
+    environment: ${{github.event.inputs.Environment}}
     name: 'Terraform plan'
     env: 
       ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
       ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-      TerraformEnvironment: ${github.inputs.TerraformEnvironment}
+      TerraformEnvironment: ${{github.event.inputs.Environment}}
     runs-on: ubuntu-latest
 
     defaults:
@@ -84,7 +84,7 @@ jobs:
     
 
       - name: 'Initialize terraform'
-        run: terraform init -backend-config=environments/${github.event.inputs.Environment}.tfbackend -var-file=environments/${github.event.inputs.Environment}.tfvars
+        run: terraform init -backend-config=environments/${{github.event.inputs.Environment}}.tfbackend -var-file=environments/${{github.event.inputs.Environment}}.tfvars
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
       - name: 'Terraform plan'
@@ -92,7 +92,7 @@ jobs:
 
 
   terraform_apply:
-    environment: DEV
+    environment: ${{github.event.inputs.Environment}}
     name: 'Terraform apply'
     needs: [terraform_plan]
     
@@ -126,7 +126,7 @@ jobs:
         run: terraform init
         
       - name: 'Terraform apply'
-        run: terraform apply -auto-approve -backend-config=environments/${github.event.inputs.Environment}.tfbackend -var-file=environments/${github.event.inputs.Environment}.tfvars
+        run: terraform apply -auto-approve -backend-config=environments/${{github.event.inputs.Environment}}.tfbackend -var-file=environments/${{github.event.inputs.Environment}}.tfvars
 
       - name: 'terraform state'
-        run: terraform state list -backend-config=environments/${github.event.inputs.Environment}.tfbackend -var-file=environments/${github.event.inputs.Environment}.tfvars
+        run: terraform state list -backend-config=environments/${{github.event.inputs.Environment}}.tfbackend -var-file=environments/${{github.event.inputs.Environment}}.tfvars

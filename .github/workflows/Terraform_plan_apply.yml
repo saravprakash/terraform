@@ -46,7 +46,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: infrastructure/${github.inputs.Configuration}
+        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
     
     steps:
       - name: checkout
@@ -55,7 +55,6 @@ jobs:
       - name: 'echo workspace'
         run: |
           pwd
-          
           echo "github.workspace"
           echo ${{ github.workspace }}
           echo "GITHUB_WORKSPACE"
@@ -86,7 +85,7 @@ jobs:
 
       - name: 'Initialize terraform'
         run: terraform init -backend-config=environments/${github.event.inputs.Environment}.tfbackend -var-file=environments/${github.event.inputs.Environment}.tfvars
-        working-directory: infrastructure/${github.inputs.Configuration}
+        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
       - name: 'Terraform plan'
         run: terraform plan
@@ -107,7 +106,7 @@ jobs:
     defaults:
       run:
         shell: bash
-        working-directory: infrastructure/${github.inputs.Configuration}
+        working-directory: infrastructure/${{ github.event.inputs.Configuration }}
 
     steps:
       - name: checkout

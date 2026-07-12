@@ -25,6 +25,27 @@ on:
           - 'DEV'
           - 'UAT'
           - 'PROD'
+      lock_id:
+        type: string
+        description: 'Enter lock id to unlock the state file'
+        default: 'terraform-lock'
+        required: false
+      import_id:
+        type: string
+        description: 'Enter import id for the resource into the state file'
+        default: ''
+        required: false
+      import_name:
+        type: string
+        description: 'Enter import name for the resource into the state file'
+        default: ''
+        required: false
+      remove_resource_name:
+        type: string
+        description: 'Enter name for the resource to be removed from the state file'
+        default: ''
+        required: false
+
 
   # push:
   #   branches:

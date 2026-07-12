@@ -114,6 +114,8 @@ jobs:
           tail -n +2 "$CSF_FILE" \
             | while IFS=',' read -r resource_name resource_id; do
                 echo "resource_name: $resource_name"
+                echo "resource_id: $resource_id"
+
                 # trim surrounding whitespace from resource_name while prserving embedded quotes like ["key"]   
                 resource_name="$(trim_ws "$resource_name")"
                 resource_id="$(trim_ws "$resource_id")"

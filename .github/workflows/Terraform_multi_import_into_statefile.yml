@@ -107,7 +107,7 @@ jobs:
             s="${s#"${s%%[![:space:]]*}"}"
             # remove trailing whitespace characters
             s="${s%"${s##*[![:space:]]}"}"
-            print '%s' "$s"
+            echo "$s"
           }
           
           echo "Importing resources from CSV file: $CSF_FILE"

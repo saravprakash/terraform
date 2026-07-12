@@ -28,7 +28,7 @@ on:
       lock_id:
         type: string
         description: 'Enter lock id to unlock the state file'
-        default: 'terraform-lock'
+        default: ''
         required: false
       import_id:
         type: string

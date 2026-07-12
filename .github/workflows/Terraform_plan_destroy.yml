@@ -1,4 +1,4 @@
-name: 'Terraform Plan and Apply'
+name: 'Terraform Plan and Destroy'
 
 on:
   workflow_dispatch:
@@ -92,9 +92,9 @@ jobs:
 
 
 
-  terraform_apply:
+  terraform_destroy:
     environment: ${{github.event.inputs.Environment}}
-    name: 'Terraform apply'
+    name: 'Terraform destroy'
     needs: [terraform_plan]
     
     env: 
@@ -147,8 +147,8 @@ jobs:
         run: terraform init -backend-config=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfbackend -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{ github.event.inputs.TerraformEnvironment }}.tfvars
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
         
-      - name: 'Terraform apply'
-        run: terraform apply -auto-approve -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{github.event.inputs.TerraformEnvironment}}.tfvars
+      - name: 'Terraform destroy'
+        run: terraform destroy -auto-approve -var-file=environments/${{ github.event.inputs.TerraformEnvironment }}/${{github.event.inputs.TerraformEnvironment}}.tfvars
         working-directory: infrastructure/${{ github.event.inputs.Configuration }}
       - name: 'terraform state'
         run: terraform state list 

@@ -21,3 +21,15 @@ output "subnet_details" {
     }
   }
 }
+
+output "network_security_groups" {
+  description = "Map of subnet names to NSG resource objects"
+  value       = azurerm_network_security_group.nsg
+}
+
+output "nsg_ids" {
+  description = "Map of subnet names to NSG IDs"
+  value = {
+    for name, nsg in azurerm_network_security_group.nsg : name => nsg.id
+  }
+}

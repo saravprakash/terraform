@@ -9,7 +9,7 @@ resource "azurerm_subnet" "subnet" {
   service_endpoints = lookup(var.service_endpoints, each.key, [])
 
   dynamic "delegation" {
-    for_each = length(var.subnet_delegations) > 0 && (var.subnet_delegations) != null ? [var.subnet_delegations] : {}
+    for_each = length(var.subnet_delegations) > 0 && (var.subnet_delegations) != null ? var.subnet_delegations : {}
     content {
       name = delegation.key
       service_delegation {

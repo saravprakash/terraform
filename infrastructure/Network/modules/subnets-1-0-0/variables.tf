@@ -38,21 +38,6 @@ variable "service_endpoints" {
   # }
 }
 
-variable "additional_properties" {
-  description = "Map of subnet names to additional properties"
-  type        = map(object({
-    enforce_private_link_endpoint_network_policies = optional(bool, false)
-    enforce_private_link_service_network_policies  = optional(bool, false)
-  }))
-  default = {}
-  # Example:
-  # {
-  #   "pe" = {
-  #     enforce_private_link_endpoint_network_policies = true
-  #     enforce_private_link_service_network_policies  = true
-  #   }
-  # }
-}
 
 variable "subnet_delegations" {
   description = "Map of subnet names to subnet delegation configurations"

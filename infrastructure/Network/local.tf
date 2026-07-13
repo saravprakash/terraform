@@ -18,25 +18,7 @@ locals {
     "${var.application_name}-${var.location}-${var.env}-laob-snet" = ["Microsoft.Storage", "Microsoft.ServiceBus"]
   }
 
-  # Additional properties configuration: subnet_name = { properties }
-  additional_properties_config = {
-    "${var.application_name}-${var.location}-${var.env}-pe-snet" = {
-      enforce_private_link_endpoint_network_policies = true
-      enforce_private_link_service_network_policies  = true
-    }
-    "${var.application_name}-${var.location}-${var.env}-swa-snet" = {
-      enforce_private_link_endpoint_network_policies = false
-      enforce_private_link_service_network_policies  = false
-    }
-    "${var.application_name}-${var.location}-${var.env}-faob-snet" = {
-      enforce_private_link_endpoint_network_policies = false
-      enforce_private_link_service_network_policies  = false
-    }
-    "${var.application_name}-${var.location}-${var.env}-laob-snet" = {
-      enforce_private_link_endpoint_network_policies = false
-      enforce_private_link_service_network_policies  = false
-    }
-  }
+
 
   subnet_delegations = {
     "${var.application_name}-${var.location}-${var.env}-pe-snet" = {

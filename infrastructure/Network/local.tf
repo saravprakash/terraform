@@ -37,16 +37,17 @@ locals {
       enforce_private_link_service_network_policies  = false
     }
   }
-}
 
-subnet_delegations = {
-  "${var.application_name}-${var.location}-${var.env}-pe-snet"   = {
-    service_delegation {
-      name = "Microsoft.Web/serverFarms"
-      actions = [
-        "Microsoft.Network/virtualNetworks/subnets/join/action",
-        "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"
-      ]
+  subnet_delegations = {
+    "${var.application_name}-${var.location}-${var.env}-pe-snet"   = {
+        service_delegation {
+        name = "Microsoft.Web/serverFarms"
+        actions = [
+            "Microsoft.Network/virtualNetworks/subnets/join/action",
+            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"
+        ]
+        }
     }
   }
 }
+

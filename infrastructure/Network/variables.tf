@@ -3,7 +3,8 @@ variable "env" {
 }
 
 variable "location" {
-    type = "sa"
+    type = string
+    default = "sa"
 }
 
 variable "application_name" {

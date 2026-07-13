@@ -39,14 +39,14 @@ locals {
   }
 
   subnet_delegations = {
-    "${var.application_name}-${var.location}-${var.env}-pe-snet"   = {
-        service_delegation {
+    "${var.application_name}-${var.location}-${var.env}-pe-snet" = {
+      service_delegation = {
         name = "Microsoft.Web/serverFarms"
         actions = [
-            "Microsoft.Network/virtualNetworks/subnets/join/action",
-            "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"
+          "Microsoft.Network/virtualNetworks/subnets/join/action",
+          "Microsoft.Network/virtualNetworks/subnets/prepareNetworkPolicies/action"
         ]
-        }
+      }
     }
   }
 }

@@ -42,10 +42,8 @@ variable "service_endpoints" {
 variable "subnet_delegations" {
   description = "Map of subnet names to subnet delegation configurations"
   type        = map(object({
-    service_delegation = object({
       name    = string
       actions = list(string)
-    })
   }))
   default = {}
   # Example:

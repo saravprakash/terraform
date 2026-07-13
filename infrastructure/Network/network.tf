@@ -14,5 +14,5 @@ module "subnets" {
 
   subnets                   = local.subnets_config
   service_endpoints         = local.service_endpoints_config
-  subnet_delegations     = local.subnet_delegations
+  subnet_delegations        = local.subnet_delegations
 }

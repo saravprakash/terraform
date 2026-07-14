@@ -8,6 +8,7 @@ locals {
     "${var.application_name}-${var.location}-${var.env}-swa-snet"  = "10.0.0.16/28"  # Static Web App
     "${var.application_name}-${var.location}-${var.env}-faob-snet" = "10.0.0.32/28"  # Function App Outbound
     "${var.application_name}-${var.location}-${var.env}-laob-snet" = "10.0.0.48/28"  # Logic App Outbound
+    "${var.application_name}-${var.location}-${var.env}-aks-snet" = "10.0.0.64/26"  # AKS Subnet
   }
 
   # Service endpoints configuration: subnet_name = [list of service endpoints]
@@ -16,7 +17,7 @@ locals {
     "${var.application_name}-${var.location}-${var.env}-swa-snet"  = ["Microsoft.Web"]
     "${var.application_name}-${var.location}-${var.env}-faob-snet" = ["Microsoft.Storage", "Microsoft.Sql"]
     "${var.application_name}-${var.location}-${var.env}-laob-snet" = ["Microsoft.Storage", "Microsoft.ServiceBus"]
-  }
+    "${var.application_name}-${var.location}-${var.env}-aks-snet" = ["Microsoft.ContainerInstance/containerGroups"]
 
 
 

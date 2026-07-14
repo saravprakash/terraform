@@ -1,0 +1,6 @@
+resource_group_name  = "terraform-infra"
+storage_account_name = "tfmtfstatefiles"                
+container_name       = "tfstatefiles"            
+key                  = "tfmstatefile-aks-dev.tfstate"
+subscription_id      = "a0301882-3cb5-4e30-891a-07e6fc79241e"
+tenant_id            = "75ca1d08-12e5-42b2-b967-c053652803b5"

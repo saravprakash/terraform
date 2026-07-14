@@ -17,7 +17,7 @@ locals {
     "${var.application_name}-${var.location}-${var.env}-swa-snet"  = ["Microsoft.Web"]
     "${var.application_name}-${var.location}-${var.env}-faob-snet" = ["Microsoft.Storage", "Microsoft.Sql"]
     "${var.application_name}-${var.location}-${var.env}-laob-snet" = ["Microsoft.Storage", "Microsoft.ServiceBus"]
-    "${var.application_name}-${var.location}-${var.env}-aks-snet" = ["Microsoft.ContainerInstance/containerGroups"]
+    "${var.application_name}-${var.location}-${var.env}-aks-snet" = ["Microsoft.ContainerRegistry", "Microsoft.KeyVault"]
   }
 
 
